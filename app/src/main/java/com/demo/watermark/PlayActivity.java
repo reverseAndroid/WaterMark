@@ -1,11 +1,11 @@
 package com.demo.watermark;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.MediaController;
 import android.widget.VideoView;
@@ -84,25 +84,25 @@ public class PlayActivity extends AppCompatActivity {
                 commands[5] = "-filter_complex";
                 //水印位置：（x,y)=(10,10)<=(left,top)距离左侧、底部各多少像素
                 commands[6]="overlay=main_w-overlay_w+75:main_h-overlay_h-1 ";
-                commands[7] = "-b";        //这个
-                commands[8] = "2048k";     //和这个 是为了使视频质量不掉的太严重
+                commands[7] = "-b";        //这个是为了使视频质量不掉的太严重
+                commands[8] = "2048k";     //这个是设置生成视频的大小
                 commands[9] = "-codec:a";
                 commands[10] = "copy";
                 commands[11] = outputUrl;
                 FFmpegKit.execute(commands, new FFmpegKit.KitInterface() {
                     @Override
                     public void onStart() {
-                        Log.e("FFmpegLog LOGCAT", "FFmpeg 命令行开始执行了...");
+                        Log.e("PlayActivity", "FFmpeg 命令行开始执行了...");
                     }
 
                     @Override
                     public void onProgress(int progress) {
-                        Log.e("FFmpegLog LOGCAT", "done com" + "FFmpeg 命令行执行进度..." + progress);
+                        Log.e("PlayActivity", "done com" + "FFmpeg 命令行执行进度..." + progress);
                     }
 
                     @Override
                     public void onEnd(int result) {
-                        Log.e("FFmpegLog LOGCAT", "FFmpeg 命令行执行完成...");
+                        Log.e("PlayActivity", "FFmpeg 命令行执行完成...");
                         Message msg = new Message();
                         msg.what = 0;
                         mHandler.sendMessage(msg);
